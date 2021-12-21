@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="../build/react.development.js"></script>
+    <script src="../build/react-dom.development.js"></script>
+    <script src="../build/babel.min.js"></script>
+    <style>
+      .move {
+        transform: translateX(100px);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      class Child extends React.Component {
+        constructor(props) {
+          super(props);
+          this.divRef = React.createRef();
+          this.state = {
+            opacity: 1,
+          };
+        }
+        componentDidMount() {
+          this.timer = setInterval(() => {
+            var opacity = this.state.opacity;
+            opacity -= 0.3;
+            if (opacity < 0.1) {
+              opacity = 1;
+            }
+            this.setState({ opacity: opacity });
+            if (this.divRef.current.className.indexOf("move") > 0) {
+              this.divRef.current.className = this.divRef.current.className
+                .split(" ")
+                .filter((item) => item != "move");
+            }
+          }, 1000);
+          setTimeout(() => {
+            this.divRef.current.className += " move";
+          }, 0);
+        }
+
+        render() {
+          return (
+            <div
+              className="test"
+              ref={this.divRef}
+              style={{
+                opacity: this.state.opacity,
+                transition: "transform 2s linear",
+              }}
+            >
+            <input type="text"/>
+              change opacity
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<Child />, document.getElementById("example"));
+    </script>
+  </body>
+</html>

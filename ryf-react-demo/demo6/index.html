@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="../build/react.development.js"></script>
+    <script src="../build/react-dom.development.js"></script>
+    <script src="../build/babel.min.js"></script>
+    <script src="../build/prop-types.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      // 组件类的PropTypes属性，就是用来验证组件实例的属性是否符合要求
+      // defaultProps属性可以用来设置组件属性的默认值。
+
+      var dataStr = "123";
+      var dataNum = 113; // 控制台报错
+
+      class MyTitle extends React.Component {
+        static propTypes = {
+          title: PropTypes.string.isRequired,
+        }
+        static defaultProps = {
+          title: "this is default title",
+        };
+        render() {
+          return (
+            <h1>
+              {this.props.title}--{typeof this.props.title}
+            </h1>
+          );
+        }
+      }
+
+      ReactDOM.render(
+        <div>
+          <MyTitle title={dataStr} />
+          <MyTitle title={dataNum} />
+          <MyTitle />
+        </div>,
+        document.getElementById("example")
+      );
+    </script>
+  </body>
+</html>

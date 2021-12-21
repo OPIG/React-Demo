@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="../build/react.development.js"></script>
+    <script src="../build/react-dom.development.js"></script>
+    <script src="../build/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      class Input extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            inputVal: "default Val",
+          };
+          this._bind("handleChange");
+        }
+        _bind(...methods) {
+          methods.map((method) => {
+            this[method] = this[method].bind(this);
+          });
+        }
+        handleChange(event) {
+          const val = event.target.value;
+          if (val != this.state.inputVal) {
+            this.setState({ inputVal: val });
+          }
+        }
+        render() {
+          var inputVal = this.state.inputVal;
+          return (
+            <div>
+              <input
+                type="text"
+                value={inputVal}
+                onChange={this.handleChange}
+              />
+              <p>{inputVal}</p>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(
+          <Input/>,
+          document.getElementById('example')
+      )
+    </script>
+  </body>
+</html>
